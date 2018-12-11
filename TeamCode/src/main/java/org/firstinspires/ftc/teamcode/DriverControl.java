@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name="Driver Control", group="Driver")
 public class DriverControl extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive, rightDrive, lift;
+    private DcMotor leftDrive, rightDrive, lift, hangLock;
 
     @Override
     public void init() {
@@ -17,10 +17,12 @@ public class DriverControl extends OpMode {
         leftDrive = hardwareMap.get(DcMotor.class, "leftdrive");
         rightDrive = hardwareMap.get(DcMotor.class, "rightdrive");
         lift = hardwareMap.get(DcMotor.class, "lift");
+        hangLock = hardwareMap.get(DcMotor.class, "hanglock");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
         lift.setDirection(DcMotor.Direction.FORWARD);
+        hangLock.setDirection(DcMotor.Direction.FORWARD);
     }
 
     @Override
@@ -39,15 +41,17 @@ public class DriverControl extends OpMode {
         leftDrive.setPower(leftDrivePower);
         rightDrive.setPower(rightDrivePower);
 
-        if (gamepad1.dpad_up && gamepad1.a) {
+        if (gamepad1.dpad_up) {
             lift.setPower(1);
-        } else if (gamepad1.dpad_down && gamepad1.a) {
-            lift.setPower(-1);
-        } else if (gamepad1.dpad_up) {
-            lift.setPower(0.2);
         } else if (gamepad1.dpad_down) {
-            lift.setPower(-0.2);
+            lift.setPower(-1);
         } else { lift.setPower(0); }
+
+        if (gamepad1.a) {
+            hangLock.setPower(0.4);
+        } else if (gamepad1.b) {
+            hangLock.setPower(-0.4);
+        } else { hangLock.setPower(0); }
     }
 
     @Override
@@ -55,5 +59,6 @@ public class DriverControl extends OpMode {
         leftDrive.setPower(0);
         rightDrive.setPower(0);
         lift.setPower(0);
+        hangLock.setPower(0);
     }
 }

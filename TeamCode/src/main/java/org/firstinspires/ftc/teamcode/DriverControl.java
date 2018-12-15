@@ -19,8 +19,8 @@ public class DriverControl extends OpMode {
         lift = hardwareMap.get(DcMotor.class, "lift");
         hangLock = hardwareMap.get(DcMotor.class, "hanglock");
 
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
         lift.setDirection(DcMotor.Direction.FORWARD);
         hangLock.setDirection(DcMotor.Direction.FORWARD);
     }
@@ -35,8 +35,8 @@ public class DriverControl extends OpMode {
         double leftDrivePower;
         double rightDrivePower;
 
-        leftDrivePower = gamepad1.left_stick_y;
-        rightDrivePower = gamepad1.right_stick_y;
+        leftDrivePower = gamepad1.left_stick_y*0.75;
+        rightDrivePower = gamepad1.right_stick_y*0.75;
 
         leftDrive.setPower(leftDrivePower);
         rightDrive.setPower(rightDrivePower);

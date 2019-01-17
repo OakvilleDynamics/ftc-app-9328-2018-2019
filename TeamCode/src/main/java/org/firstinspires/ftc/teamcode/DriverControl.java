@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="Driver Control", group="Driver")
@@ -25,8 +26,8 @@ public class DriverControl extends OpMode {
         //Hardware Mapping pt2
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
-        lift.setDirection(DcMotor.Direction.FORWARD);
-        liftSwing.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotor.Direction.REVERSE);
+        liftSwing.setDirection(DcMotor.Direction.REVERSE);
     }
 
     @Override
@@ -46,16 +47,12 @@ public class DriverControl extends OpMode {
         rightDrive.setPower(rightDrivePower);
 
         //Set Lift Power with Dpad up and down
-        if (gamepad1.dpad_up) {
-            lift.setPower(0.8);
-        } else if (gamepad1.dpad_down) {
-            lift.setPower(-0.8);
-        } else { lift.setPower(0); }
+        lift.setPower(gamepad2.right_stick_y*0.8);
 
-        if (gamepad1.dpad_right) {
-            liftSwing.setPower(0.4);
-        } else if (gamepad1.dpad_left) {
-            liftSwing.setPower(-0.4);
+        if (gamepad2.dpad_left) {
+            liftSwing.setPower(0.45);
+        } else if (gamepad2.dpad_right) {
+            liftSwing.setPower(-0.45);
         } else { liftSwing.setPower(0); }
     }
 
